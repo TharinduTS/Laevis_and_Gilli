@@ -120,3 +120,9 @@ p <- ggplot(data = all_data, aes(x=sample_no, y=dep))  +
   geom_boxplot(aes(fill=sample_name))
 ggsave(filename = "all_samples.pdf",plot = p,height = 10,width = 20)
 ```
+# Creating unfiltered VCF
+
+use following to get the bam file list seperated by spaces
+```bash
+ls ../all_bam_files/ | tr "\n" " "
+```
