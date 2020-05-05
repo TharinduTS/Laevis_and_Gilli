@@ -130,49 +130,20 @@ ls ../all_bam_files/ | tr "\n" " "
 
 ```bash
 
-Inactive Modules:
-  1) openmpi/2.1.1
+#!/bin/sh
+#SBATCH --job-name=bwa_505
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --time=24:00:00
+#SBATCH --mem=64gb
+#SBATCH --output=bwa505.%J.out
+#SBATCH --error=bwa505.%J.err
+#SBATCH --account=def-ben
 
-Due to MODULEPATH changes, the following have been reloaded:
-  1) bwa/0.7.17     2) samtools/1.10
-
-The following have been reloaded with a version change:
-  1) gcccore/.5.4.0 => gcccore/.7.3.0
-  2) icc/.2016.4.258 => icc/.2018.3.222
-  3) ifort/.2016.4.258 => ifort/.2018.3.222
-  4) imkl/11.3.4.258 => imkl/2018.3.222
-  5) intel/2016.4 => intel/2018.3
-
-[warning] samtools mpileup option `u` is functional, but deprecated. Please switch to using bcftools mpileup in future.
-[warning] samtools mpileup option `g` is functional, but deprecated. Please switch to using bcftools mpileup in future.
-Note: none of --samples-file, --ploidy or --ploidy-file given, assuming all sites are diploid
-[mpileup] 1 samples in 1 input files
-^C
-[premacht@gra-login1 all_bam_files]$ clear
-
-[premacht@gra-login1 all_bam_files]$ vi create_unfiltered_VCF 
-[premacht@gra-login1 all_bam_files]$ bash create_unfiltered_VCF ../reference_genome/Xla.v91.repeatMasked.fa
-
-Inactive Modules:
-  1) openmpi/2.1.1
-
-Due to MODULEPATH changes, the following have been reloaded:
-  1) bwa/0.7.17     2) samtools/1.10
-
-The following have been reloaded with a version change:
-  1) gcccore/.5.4.0 => gcccore/.7.3.0
-  2) icc/.2016.4.258 => icc/.2018.3.222
-  3) ifort/.2016.4.258 => ifort/.2018.3.222
-  4) imkl/11.3.4.258 => imkl/2018.3.222
-  5) intel/2016.4 => intel/2018.3
-
-Note: none of --samples-file, --ploidy or --ploidy-file given, assuming all sites are diploid
-[warning] samtools mpileup option `u` is functional, but deprecated. Please switch to using bcftools mpileup in future.
-[warning] samtools mpileup option `g` is functional, but deprecated. Please switch to using bcftools mpileup in future.
-[mpileup] 46 samples in 46 input files
-^C
-[premacht@gra-login1 all_bam_files]$ vi create_unfiltered_VCF 
-
+#SBATCH --mail-user=premacht@mcmaster.ca
+#SBATCH --mail-type=BEGIN
+#SBATCH --mail-type=END
+#SBATCH --mail-type=FAIL
 #SBATCH --mail-type=REQUEUE
 #SBATCH --mail-type=ALL
 
@@ -183,7 +154,6 @@ module load intel/2018.3
 module load bcftools/1.10.2
 
 samtools mpileup -d8000 -ugf $1 BJE1488_sorted.bam BJE1489_sorted.bam BJE261_sorted.bam BJE263_sorted.bam BJE264_sorted.bam BJE265_sorted.bam BJE266_sorted.bam BJE267_sorted.bam BJE3536.fqsorted.bam BJE3540.fqsorted.bam BJE3545_sorted.bam BJE3574.fqsorted.bam BJE3581.fqsorted.bam BJE3608.fqsorted.bam BJE3639_sorted.bam CoGH105.fqsorted.bam JMEC003.fqsorted.bam JMEC006.fqsorted.bam jonk_02.fqsorted.bam XG12_07_sorted.bam XG153_sorted.bam XG92_sorted.bam XGL713_123_sorted.bam XGL713_177_sorted.bam XGL713_179_sorted.bam XGL713_180_sorted.bam XGL713_181_sorted.bam XGL713_232_sorted.bam XGUAE_124_sorted.bam XGUAE_36_sorted.bam XGUAE_42_sorted.bam XGUAE_43_sorted.bam XGUAE_44_sorted.bam XGUAE_59_sorted.bam XGUAE_65_sorted.bam XGUAE_70_sorted.bam XGUAE_71_sorted.bam XGUAE_72_sorted.bam XGUAE_92_sorted.bam XGUAE_93_sorted.bam XGUAE_97_sorted.bam XL_CPT1_sorted.bam XL_CPT2_sorted.bam XL_CPT3_sorted.bam XL_CPT4_sorted.bam XLJONK_14_sorted.bam | bcftools call -V indels --format-fields GQ -m -O z -O z -o Xlaevis_and_gilli_all_samples_merged_sorted.bam.vcf.gz
-
 ```
 
 
