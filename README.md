@@ -120,7 +120,7 @@ p <- ggplot(data = all_data, aes(x=sample_no, y=dep))  +
   geom_boxplot(aes(fill=sample_name))
 ggsave(filename = "all_samples.pdf",plot = p,height = 10,width = 20)
 ```
-# Creating unfiltered VCF
+# Creating VCF with mapping quality 0f 20
 
 following was used to get the bam file list seperated by spaces and was added in the script as file list. $1 is reference genome.
 ```bash
