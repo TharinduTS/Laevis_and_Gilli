@@ -148,7 +148,7 @@ find $BAMFOLDER |  grep bam$ > all.files
 ```
 ## Calculate GLs from all the BAM files using ANGSD
 ```bash
-angsd -bam all.files -GL 2 -doMajorMinor 1 -doMaf 1 -SNP_pval 2e-6 -minMapQ 30 -minQ 20 -minInd 15 -minMaf 0.05 -doGlf 2 -out all -P 1
+angsd -bam all.files -GL 2 -doMajorMinor 1 -doMaf 1 -SNP_pval 2e-6 -minMapQ 30 -minQ 20 -doCounts 1 -doDepth 1 -setMinDepth 2 -setMaxDepth 100  -minInd 15 -minMaf 0.05 -doGlf 2 -out all -P 1
 ```
 Description
 ```txt
@@ -158,7 +158,11 @@ Description
  -doMaf 1 : tells ANGSD to calculate minor allele frequencies (needed by two of the options below: -SNP_pval and -minMaf)
  -SNP_pval 2e-6 : tells ANGSD to use a p-value threshold of 2e-6 for calling SNPs
  -minMapQ 20 : tells ANGSD what to require as minimum mapping quality (quality filter)
- -minQ 10 : tells ANGSD what to require as minimum base quality (quality filter). One third of the sample size was used.
+ -minQ 20 : tells ANGSD what to require as minimum base quality (quality filter). One third of the sample size was used.
+ -doCounts 1 :	Count the number A,C,G,T. All sites, All samples) - needed to use -doDepth
+ -doDepth 1 : find depth distribution for every sample and for all samples jointly - needed to use depth limits
+ -setMinDepth 2 :	If total depth is smaller then site is removed from analysis.
+ -setMaxDepth 100 : If total depth is larger then site is removed from analysis.
  -minInd 25 : tells ANGSD to only output GLs for loci with data for at least 25 individuals for each site (quality filter)
  -minMaf 0.05 : tells ANGSD to only output GLS for loci with a minimum minor allele frequency of 0.05 (quality filter)
  -doGlf 2 : tells ANGSD to write the final genotype likelihoods into a file in beagle format
