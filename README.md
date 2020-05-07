@@ -136,6 +136,35 @@ module load angsd/0.929
 ```bash
 AA=/scratch/premacht/xlaevis_and_xgilli/ANGSD
 ```
+## Set path to a bam file list with several bam files
+```bash
+BAMFOLDER=$AA/../all_bam_files
+```
+# Make input data using ANGSD
+
+## Make a file that contains the paths of all the bam files
+```bash
+find $BAMFOLDER |  grep bam$ > all.files
+```
+## Calculate GLs from all the BAM files using ANGSD
+```bash
+angsd -bam all.files -GL 2 -doMajorMinor 1 -doMaf 1 -SNP_pval 2e-6 -minMapQ 30 -minQ 20 -minInd 15 -minMaf 0.05 -doGlf 2 -out all -P 1
+```
+Description
+```txt
+-bam all.files : tells ANGSD that the bam files to calculate GL from are listed in the file all.files
+ -GL 2 : tells ANGSD to use the GATK genotype likelihood model
+ -doMajorMinor 1 : tells ANGSD to infer the major and minor alleles
+ -doMaf 1 : tells ANGSD to calculate minor allele frequencies (needed by two of the options below: -SNP_pval and -minMaf)
+ -SNP_pval 2e-6 : tells ANGSD to use a p-value threshold of 2e-6 for calling SNPs
+ -minMapQ 20 : tells ANGSD what to require as minimum mapping quality (quality filter)
+ -minQ 10 : tells ANGSD what to require as minimum base quality (quality filter). One third of the sample size was used.
+ -minInd 25 : tells ANGSD to only output GLs for loci with data for at least 25 individuals for each site (quality filter)
+ -minMaf 0.05 : tells ANGSD to only output GLS for loci with a minimum minor allele frequency of 0.05 (quality filter)
+ -doGlf 2 : tells ANGSD to write the final genotype likelihoods into a file in beagle format
+ -out all : tells ANGSD to call all output files it generate "all" followed by the appropriate suffix e.g. "all.beagle.gz"
+ -P 1 : tells ANDSG use 1 thread (up to 100% CPU)
+```
 
 # Creating VCF with mapping quality 0f 20
 
