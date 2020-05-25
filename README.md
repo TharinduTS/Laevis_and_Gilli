@@ -429,7 +429,7 @@ Then download these all runs folders and use it for R
 
 #**************************************
 
-# Make lnlks file using following script
+# Make lnlks file and bamnames using following script using an excel file with relavent columns. 
 
 ```r
 #make lnlks
@@ -503,6 +503,58 @@ locality_df<-data_frame(name,location,id)
 
 loc_info<-cbind(name,location,id)
 write.table(loc_info,"bam_names.txt",sep="\t",row.names=FALSE,quote = FALSE)
+
+```
+# Example excel file
+
+```text
+IND	ID	LOCATION	SPECIES	FILE
+IND1	 BJE266	vic-Lwiro	laevis	 BJE266_sorted.bam
+IND2	 XGUAE_92	la-kleinmond	laevis	 XGUAE_92_sorted.bam
+IND3	 XGUAE_65	la-CoGH	laevis	 XGUAE_65_sorted.bam
+IND4	 BJE265	vic-Lwiro	laevis	 BJE265_sorted.bam
+IND5	 XGL713_123	gi-kleinmond	gilli	 XGL713_123_sorted.bam
+IND6	 XGUAE_71	la-kleinmond	laevis	 XGUAE_71_sorted.bam
+IND7	 XL_CPT1	la-CoGH	laevis	 XL_CPT1_sorted.bam
+IND8	 XGUAE_42	gi-CoGH	gilli	 XGUAE_42_sorted.bam
+IND9	 XGUAE_59	la-CoGH	laevis	 XGUAE_59_sorted.bam
+IND10	 XGL713_180	gi-kleinmond	gilli	 XGL713_180_sorted.bam
+IND11	 XG92	gi-CoGH	gilli	 XG92_sorted.bam
+IND12	 XGUAE_43	gi-CoGH	gilli	 XGUAE_43_sorted.bam
+IND13	 BJE3545	la-Beaufort West_ Green clade	laevis	 BJE3545_sorted.bam
+IND14	 BJE1488	vic-Lwiro	laevis	 BJE1488_sorted.bam
+IND15	 BJE1489	vic-Lwiro	laevis	 BJE1489_sorted.bam
+IND16	 BJE3540	la-Beaufort West_ Lemoenfontein Game Lodge_ Kotara Dam	laevis	 BJE3540.fqsorted.bam
+IND17	 BJE3574	la-Victoria West; Jas Fontein Farm	laevis	 BJE3574.fqsorted.bam
+IND18	 XGL713_177	gi-kleinmond	gilli	 XGL713_177_sorted.bam
+IND19	 XGUAE_70	la-kleinmond	laevis	 XGUAE_70_sorted.bam
+IND20	 BJE261	la-Bukavu	laevis	 BJE261_sorted.bam
+IND21	 BJE3581	la-30 km south of Kimberley_ Debonaire farm	laevis	 BJE3581.fqsorted.bam
+IND22	 BJE3536	la-Beaufort West_ Lemoenfontein Game Lodge_ Kotara Dam	laevis	 BJE3536.fqsorted.bam
+IND23	 XGUAE_36	gi-CoGH	gilli	 XGUAE_36_sorted.bam
+IND24	 XGUAE_72	la-kleinmond	laevis	 XGUAE_72_sorted.bam
+IND25	 XGUAE_44	gi-CoGH	gilli	 XGUAE_44_sorted.bam
+IND26	 XGUAE_124	la-kleinmond	laevis	 XGUAE_124_sorted.bam
+IND27	 BJE267	vic-Lwiro	laevis	 BJE267_sorted.bam
+IND28	 XL_CPT2	la-CoGH	laevis	 XL_CPT2_sorted.bam
+IND29	 BJE3608	la-30 km south of Kimberley_ Debonaire farm	laevis	 BJE3608.fqsorted.bam
+IND30	 BJE264	vic-Lwiro	laevis	 BJE264_sorted.bam
+IND31	 XG153	gi-CoGH	gilli	 XG153_sorted.bam
+IND32	 XGUAE_97	la-kleinmond	laevis	 XGUAE_97_sorted.bam
+IND33	 BJE3639	la-Niewoudtville_ purple clade	laevis	 BJE3639_sorted.bam
+IND34	 XL_CPT4	la-CoGH	laevis	 XL_CPT4_sorted.bam
+IND35	 CoGH105	la-Cape of Good Hope Nature ReserveBobs hole	laevis	 CoGH105.fqsorted.bam
+IND36	 XL_CPT3	la-CoGH	laevis	 XL_CPT3_sorted.bam
+IND37	 XGL713_232	la-Yellow clade Krombridge	laevis	 XGL713_232_sorted.bam
+IND38	 jonk_02	la-Jonkershoek	laevis	 jonk_02.fqsorted.bam
+IND39	 XG12_07	gi-CoGH	gilli	 XG12_07_sorted.bam
+IND40	 XGL713_181	gi-kleinmond	gilli	 XGL713_181_sorted.bam
+IND41	 XLJONK_14	la-Blue clade	laevis	 XLJONK_14_sorted.bam
+IND42	 BJE263	vic-Lwiro	laevis	 BJE263_sorted.bam
+IND43	 JMEC006	la-Pirie Trout Hatchery 2	laevis	 JMEC006.fqsorted.bam
+IND44	 XGL713_179	gi-kleinmond	gili	 XGL713_179_sorted.bam
+IND45	 XGUAE_93	la-kleinmond	laevis	 XGUAE_93_sorted.bam
+IND46	 JMEC003	la-Rooikrantz Dam	laevis	 JMEC003.fqsorted.bam
 
 ```
 
