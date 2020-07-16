@@ -499,11 +499,12 @@ locality_info<-read_excel("./locality_info/full_summary.xlsx")
 name<-subset.data.frame(locality_info,select = 5)
 location<-subset.data.frame(locality_info,select =3)
 id<-subset.data.frame(locality_info,select =2)
-locality_df<-data_frame(name,location,id)
+species<-subset.data.frame(locality_info,select =4)
 
-loc_info<-cbind(name,location,id)
+locality_df<-data_frame(name,location,id,species)
+
+loc_info<-cbind(name,location,id,species)
 write.table(loc_info,"bam_names.txt",sep="\t",row.names=FALSE,quote = FALSE)
-
 ```
 # Example excel file
 
