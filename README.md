@@ -1256,5 +1256,87 @@ module load bcftools/1.10.2
 
 samtools mpileup -q20 -d8000 -ugf $1 BJE1488_sorted.bam BJE1489_sorted.bam BJE261_sorted.bam BJE263_sorted.bam BJE264_sorted.bam BJE265_sorted.bam BJE266_sorted.bam BJE267_sorted.bam BJE3536.fqsorted.bam BJE3540.fqsorted.bam BJE3545_sorted.bam BJE3574.fqsorted.bam BJE3581.fqsorted.bam BJE3608.fqsorted.bam BJE3639_sorted.bam CoGH105.fqsorted.bam JMEC003.fqsorted.bam JMEC006.fqsorted.bam jonk_02.fqsorted.bam XG12_07_sorted.bam XG153_sorted.bam XG92_sorted.bam XGL713_123_sorted.bam XGL713_177_sorted.bam XGL713_179_sorted.bam XGL713_180_sorted.bam XGL713_181_sorted.bam XGL713_232_sorted.bam XGUAE_124_sorted.bam XGUAE_36_sorted.bam XGUAE_42_sorted.bam XGUAE_43_sorted.bam XGUAE_44_sorted.bam XGUAE_59_sorted.bam XGUAE_65_sorted.bam XGUAE_70_sorted.bam XGUAE_71_sorted.bam XGUAE_72_sorted.bam XGUAE_92_sorted.bam XGUAE_93_sorted.bam XGUAE_97_sorted.bam XL_CPT1_sorted.bam XL_CPT2_sorted.bam XL_CPT3_sorted.bam XL_CPT4_sorted.bam XLJONK_14_sorted.bam | bcftools call -V indels --format-fields GQ -m -O z -O z -o Xlaevis_and_gilli_all_samples_merged_sorted.bam.vcf.gz
 ```
+# Codes for str plots - Seperate species
+
+# run this script in the out folder
+
+```bash
+#!/bin/sh
+#SBATCH --job-name=bwa_505
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --time=24:00:00
+#SBATCH --mem=64gb
+#SBATCH --output=bwa505.%J.out
+#SBATCH --error=bwa505.%J.err
+#SBATCH --account=def-ben
+
+#SBATCH --mail-user=premacht@mcmaster.ca
+#SBATCH --mail-type=BEGIN
+#SBATCH --mail-type=END
+#SBATCH --mail-type=FAIL
+#SBATCH --mail-type=REQUEUE
+#SBATCH --mail-type=ALL
+
+module load nixpkgs/16.09
+module load intel/2018.3
+module load angsd/0.929
+module load python/3.5.4
+
+
+AA=/scratch/premacht/xlaevis_and_xgilli/ANGSD
+```
+
+# you just have to edit this BAMFOLDER, minMapQ to about one third of sample size and minInd (minimum number of individuals to be there for the calculation)
+```bash
+BAMFOLDER=../laevis/
+
+find $BAMFOLDER |  grep bam$ > all.files
+
+angsd -bam all.files -GL 2 -doMajorMinor 1 -doMaf 1 -SNP_pval 2e-6 -minMapQ 4 -minQ 20 -doCounts 1 -doDepth 1 -setMinDepth 2 -setMaxDepth 100  -minInd 8 -minMaf 0.05 -doGlf 2 -out all -P 1
+
+
+for run in `seq 10`;   do   mkdir run_$run ; cd run_$run/;   for K in `seq 5`;     do /scratch/premacht/xlaevis_and_xgilli/NDSadmix/NGSadmix -likes ../all.beagle.gz -K $K -P 10 -o $K\_outfiles -minMaf 0.05;   done;   cd ../; done
+
+
+cp /scratch/premacht/xlaevis_and_xgilli/clumpp_input_maker_new.py .
+
+for k in `seq 5` ; do python3 clumpp_input_maker_new.py -in run_*/${k}_*qopt -type ngsadmix -out k$k ; done
+
+for f in k*param ; do /scratch/premacht/xlaevis_and_xgilli/CLUMPP_Linux64.1.1.2/CLUMPP $f ; done
+```
+
+# ************************************************************************
+
+# Download runs and clump files
+```bash
+
+scp -r premacht@graham.computecanada.ca:/scratch/premacht/xlaevis_and_xgilli/seperate_specie/l_only/out_gilli/run* ./runs/
+
+scp -r premacht@graham.computecanaa.ca:/scratch/premacht/xlaevis_and_xgilli/seperate_species/l_only/out_gilli/k* ./clumpp_files/
+
+scp -r premacht@graham.computecanada.ca:/scratch/premacht/xlaevis_and_xgilli/seperate_species/l_only/out_gilli/all.files .
+```
+# ***********************************************************************
+
+# in R
+
+
+Make a separate directory
+
+Copy mobile pack with make_lnlk.R, plot_ngsadmix.R and locality info into it
+
+Copy the folders- runs and clump files there.
+
+# ****Make sure sample details are in the same order in all.files and bam_names.txt
+
+Run make_lnlk.R
+
+
+Edit the levels and labels for plots in script plot_ngsadmix.R
+And then run plot_ngsadmix.R
+
+->	Your plots will be there
+
 
 
